@@ -1,26 +1,16 @@
 use crate::components::counter_btn::Button;
+use crate::components::error_component::Error;
 use leptos::*;
 
 /// Default Home Page
 #[component]
 pub fn Home() -> impl IntoView {
     view! {
-        <ErrorBoundary fallback=|errors| {
+        <ErrorBoundary fallback=move |cx, errors| {
+            let error_messages = errors.iter().map(|e| e.to_string()).collect::<Vec<_>>();
+            println!("{?}", error_components);
             view! {
-                <h1>"Uh oh! Something went wrong!"</h1>
-
-                <p>"Errors: "</p>
-                // Render a list of errors as strings - good for development purposes
-                <ul>
-                    {move || {
-                        errors
-                            .get()
-                            .into_iter()
-                            .map(|(_, e)| view! { <li>{e.to_string()}</li> })
-                            .collect_view()
-                    }}
-
-                </ul>
+                <Error errors=error_messages/>
             }
         }>
 

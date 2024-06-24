@@ -1,0 +1,22 @@
+{
+    "rust-analyzer.cargo.features": "all",
+    "rust-analyzer.check.command": "clippy",
+    "editor.formatOnSave": true,
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "emmet.includeLanguages": {
+        "rust": "html",
+        "*.rs": "html"
+    },
+    "tailwindCSS.includeLanguages": {
+        "rust": "html",
+        "*.rs": "html"
+    },
+    "files.associations": {
+        "*.css": "tailwindcss"
+    },
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#10323B",
+        "titleBar.activeBackground": "#174652",
+        "titleBar.activeForeground": "#F5FBFC"
+    }
+}

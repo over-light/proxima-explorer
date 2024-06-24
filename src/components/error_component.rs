@@ -1,9 +1,9 @@
 use leptos::*;
-// use std::error::Error as StdError;
 
 #[component]
-pub fn Error(#[prop(optional)] errors: dyn leptos::SignalGet) -> impl IntoView {
-    view! {
+pub fn Error(cx: Scope, errors: Vec<String>) -> impl IntoView {
+    let errors = cx.use_signal(Vec::new);
+    view! { cx,
         <h1>"Uh oh! Something went wrong!"</h1>
         <p>"Errors: "</p>
         <ul>
