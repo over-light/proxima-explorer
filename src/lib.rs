@@ -1,5 +1,8 @@
 pub mod app;
-pub mod error_template;
+pub mod components;
+pub mod pages;
+pub mod api;
+pub mod utils;
 #[cfg(feature = "ssr")]
 pub mod fileserv;
 
