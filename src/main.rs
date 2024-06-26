@@ -3,9 +3,34 @@
 async fn main() {
     use axum::Router;
     use leptos::*;
-    use leptos_axum::{generate_route_list, LeptosRoutes};
+    use leptos_axum::{ generate_route_list, LeptosRoutes };
     use proxima_explorer::app::*;
     use proxima_explorer::fileserv::file_and_error_handler;
+
+    use tracing_subscriber::{
+        prelude::__tracing_subscriber_SubscriberExt,
+        util::SubscriberInitExt,
+        Layer,
+    };
+
+    let log_filter = tracing_subscriber::filter::Targets
+        ::new()
+        .with_default(tracing::Level::INFO)
+        .with_target("tokio", tracing::Level::WARN)
+        .with_target("runtime", tracing::Level::WARN);
+
+    let fmt_layer = tracing_subscriber::fmt
+        ::layer()
+        .pretty()
+        .with_file(true)
+        .with_line_number(true)
+        .with_ansi(true)
+        .with_thread_names(false)
+        .with_thread_ids(false);
+
+    let fmt_layer_filtered = fmt_layer.with_filter(log_filter);
+
+    tracing_subscriber::Registry::default().with(fmt_layer_filtered).init();
 
     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
     // For deployment these variables are:
@@ -23,11 +48,11 @@ async fn main() {
         .fallback(file_and_error_handler)
         .with_state(leptos_options);
 
+    tracing::info!("listening on http://{}", &addr);
+
     let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
     logging::log!("listening on http://{}", &addr);
-    axum::serve(listener, app.into_make_service())
-        .await
-        .unwrap();
+    axum::serve(listener, app.into_make_service()).await.unwrap();
 }
 
 #[cfg(not(feature = "ssr"))]

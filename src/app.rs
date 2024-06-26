@@ -1,38 +1,38 @@
-use crate::components::error_template::{AppError, ErrorTemplate};
-use crate::pages::home_page::HomePage;
+use leptonic::prelude::*;
 use leptos::*;
-use leptos_meta::*;
+use leptos_meta::{ provide_meta_context, Meta, Stylesheet, Title };
 use leptos_router::*;
+
+use crate::error_template::{ AppError, ErrorTemplate };
+use crate::pages::welcome::Welcome;
 
 #[component]
 pub fn App() -> impl IntoView {
-    // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
 
     view! {
+        <Meta name="charset" content="UTF-8"/>
+        <Meta name="description" content="Proxima Explorer"/>
+        <Meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <Meta name="theme-color" content="#8856e6"/>
 
-
-        // injects a stylesheet into the document <head>
-        // id=leptos means cargo-leptos will hot-reload this stylesheet
         <Stylesheet id="leptos" href="/pkg/proxima-explorer.css"/>
+        <Stylesheet href="https://fonts.googleapis.com/css?family=Roboto&display=swap"/>
 
-        // sets the document title
-        <Title text="Welcome to Leptos"/>
+        <Title text="Proxima Explorer"/>
 
-        // content for this welcome page
-        <Router fallback=|| {
-            let mut outside_errors = Errors::default();
-            outside_errors.insert_with_default_key(AppError::NotFound);
-            view! {
-                <ErrorTemplate outside_errors/>
-            }
-            .into_view()
-        }>
-            <main>
+        <Root default_theme=LeptonicTheme::default()>
+            <Router fallback=|| {
+                let mut outside_errors = Errors::default();
+                outside_errors.insert_with_default_key(AppError::NotFound);
+                view! {
+                    <ErrorTemplate outside_errors/>
+                }
+            }>
                 <Routes>
-                    <Route path="" view=HomePage/>
+                    <Route path="" view=|| view! { <Welcome/> }/>
                 </Routes>
-            </main>
-        </Router>
+            </Router>
+        </Root>
     }
 }
