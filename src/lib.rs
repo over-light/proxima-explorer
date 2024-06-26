@@ -4,8 +4,6 @@ pub mod pages;
 pub mod api;
 pub mod utils;
 #[cfg(feature = "ssr")]
-pub mod fileserv;
-
 #[cfg(feature = "hydrate")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn hydrate() {
