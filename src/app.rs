@@ -5,7 +5,7 @@ use leptos_router::*;
 
 use crate::error_template::{AppError, ErrorTemplate};
 use crate::layouts::Layout;
-use crate::pages::welcome::Welcome;
+use crate::pages::home::Home;
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -23,17 +23,19 @@ pub fn App() -> impl IntoView {
         <Title text="Proxima Explorer"/>
 
         <Root default_theme=LeptonicTheme::default()>
-            <Layout>
-                <Router fallback=|| {
-                    let mut outside_errors = Errors::default();
-                    outside_errors.insert_with_default_key(AppError::NotFound);
-                    view! { <ErrorTemplate outside_errors/> }
-                }>
+
+            <Router fallback=|| {
+                let mut outside_errors = Errors::default();
+                outside_errors.insert_with_default_key(AppError::NotFound);
+                view! { <ErrorTemplate outside_errors/> }
+            }>
+                <Layout>
                     <Routes>
-                        <Route path="" view=|| view! { <Welcome/> }/>
+                        <Route path="" view=|| view! { <Home/> }/>
                     </Routes>
-                </Router>
-            </Layout>
+                </Layout>
+            </Router>
+
         </Root>
     }
 }

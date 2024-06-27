@@ -13,10 +13,11 @@ cfg-if = "1.0.0"
 console_error_panic_hook = "0.1.7"
 http = "1.0.0"
 leptonic = { version = "0.5.0", features = [] }
-leptos = { version = "0.6.5", features = [] }
-leptos_axum = { version = "0.6.5", optional = true }
-leptos_meta = { version = "0.6.5", features = [] }
-leptos_router = { version = "0.6.5", features = [] }
+leptos = { version = "0.6.12", features = [] }
+leptos-use = "0.10.10"
+leptos_axum = { version = "0.6.12", optional = true }
+leptos_meta = { version = "0.6.12", features = [] }
+leptos_router = { version = "0.6.12", features = [] }
 serde = "1.0.196"
 serde_json = "1.0.113"
 thiserror = "1.0.56"

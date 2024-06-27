@@ -57,29 +57,34 @@ pub fn ErrorTemplate(
     }}
 
     view! {
-        <Box style="display: flex; flex-direction: column; align-items:center;">
-            <H1>{match num_errors {
-                1 => "Error",
-                _ => "Errors",
-            }}</H1>
+        <Box class="flex flex-1 flex-col h-full justify-center items-center">
+            <>
+                <H1>
+                    {match num_errors {
+                        1 => "Error",
+                        _ => "Errors",
+                    }}
 
-            <For
-                each=move || { errors.clone().into_iter().enumerate() }
-                key=|(index, _error)| *index
-                children=move |(_index, error)| {
-                    // let error_string = error.to_string();
-                    // let error_code= error.status_code();
-                    match error {
-                        AppError::NotFound => view! {
-                            <P>"404 - Not Found"</P>
-                        },
+                </H1>
+
+                <For
+                    each=move || { errors.clone().into_iter().enumerate() }
+                    key=|(index, _error)| *index
+                    children=move |(_index, error)| {
+                        match error {
+                            AppError::NotFound => {
+                                view! {
+                                    // let error_string = error.to_string();
+                                    // let error_code= error.status_code();
+                                    <P>"404 - Not Found"</P>
+                                }
+                            }
+                        }
                     }
-                }
-            />
+                />
 
-            <LinkButton href="/">
-                "Back"
-            </LinkButton>
+                <LinkButton href="/">"Back"</LinkButton>
+            </>
         </Box>
     }
 }

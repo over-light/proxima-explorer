@@ -1,12 +1,13 @@
 use cfg_if::cfg_if;
 
 pub mod app;
-pub mod pages;
-pub mod layouts;
-
+pub mod components;
 pub mod error_template;
 #[cfg(feature = "ssr")]
 pub mod fileserv;
+pub mod layouts;
+pub mod pages;
+pub mod utils;
 
 cfg_if! {
     if #[cfg(feature = "hydrate")] {
