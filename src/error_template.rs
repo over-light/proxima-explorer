@@ -57,14 +57,13 @@ pub fn ErrorTemplate(
     }}
 
     view! {
-        <Box class="flex flex-1 flex-col h-full justify-center items-center">
+        <Box class="flex flex-1 flex-col gap-3 h-full justify-center items-center">
             <>
-                <H1>
+                <H1 class="text-4xl">
                     {match num_errors {
                         1 => "Error",
                         _ => "Errors",
                     }}
-
                 </H1>
 
                 <For
@@ -76,7 +75,7 @@ pub fn ErrorTemplate(
                                 view! {
                                     // let error_string = error.to_string();
                                     // let error_code= error.status_code();
-                                    <P>"404 - Not Found"</P>
+                                    <P class="text-3xl">"404 - Not Found"</P>
                                 }
                             }
                         }

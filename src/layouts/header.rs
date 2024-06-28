@@ -7,6 +7,7 @@ use leptos_use::use_media_query;
 #[component]
 pub fn Header() -> impl IntoView {
     let (drawer_show, set_drawer_show) = create_signal(false);
+    let is_small = use_media_query("(min-width: 800px)");
 
     view! {
         <>
@@ -16,24 +17,47 @@ pub fn Header() -> impl IntoView {
                     <H3 class="mx-2 font-bold text-xl">"Proxima"</H3>
                 </Link>
                 <Stack orientation=StackOrientation::Horizontal spacing=Size::Em(1.0) class="mr-4">
-                    <Stack
-                        orientation=StackOrientation::Horizontal
-                        spacing=Size::Em(1.0)
-                        class="mr-4"
-                    >
-                        <NavLink link="/" icon=icondata::BsHouse text="Home"/>
-                        <NavLink link="/blockchain" icon=icondata::BsBoxes text="Blockchain"/>
-                        <NavLink link="/tokens" icon=icondata::BiCoinStackSolid text="Tokens"/>
-                        <NavLink link="/other" icon=icondata::BsCardList text="Other"/>
-                    </Stack>
-                    <Button
-                        variant=ButtonVariant::Flat
-                        size=ButtonSize::Big
-                        on_click=move |_| set_drawer_show.update(|shown| *shown = !*shown)
-                    >
-                        <Icon icon=icondata::BsList class="text-2xl"/>
-                    </Button>
-                    <ThemeToggle off=LeptonicTheme::Light on=LeptonicTheme::Dark/>
+                    {move || match is_small.get() {
+                        false => {
+                            view! {
+                                <Button
+                                    variant=ButtonVariant::Flat
+                                    size=ButtonSize::Big
+                                    on_click=move |_| {
+                                        set_drawer_show.update(|shown| *shown = !*shown)
+                                    }
+                                >
+                                    <Icon icon=icondata::BsList class="text-xl"/>
+                                </Button>
+                            }
+                                .into_view()
+                        }
+                        true => {
+                            view! {
+                                <Stack
+                                    orientation=StackOrientation::Horizontal
+                                    spacing=Size::Em(1.0)
+                                    class="mr-4"
+                                >
+                                    <NavLink link="/" icon=icondata::BsHouse text="Home"/>
+                                    <NavLink
+                                        link="/blockchain"
+                                        icon=icondata::BsBoxes
+                                        text="Blockchain"
+                                    />
+                                    <NavLink
+                                        link="/tokens"
+                                        icon=icondata::BiCoinStackSolid
+                                        text="Tokens"
+                                    />
+                                    <NavLink link="/other" icon=icondata::BsCardList text="Other"/>
+                                </Stack>
+                            }
+                                .into_view()
+                        }
+                    }}
+
+                    <ThemeToggle off=LeptonicTheme::Light on=LeptonicTheme::Dark variant=ToggleVariant::Stationary/>
                 </Stack>
             </AppBar>
             <Drawer
