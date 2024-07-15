@@ -8,6 +8,7 @@ pub mod fileserv;
 pub mod layouts;
 pub mod pages;
 pub mod utils;
+pub mod contexts;
 
 cfg_if! {
     if #[cfg(feature = "hydrate")] {
